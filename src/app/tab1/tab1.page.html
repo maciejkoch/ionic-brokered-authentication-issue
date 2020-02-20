@@ -12,8 +12,20 @@
       <ion-title size="large">Tab 1</ion-title>
     </ion-toolbar>
   </ion-header>
-
-  <app-explore-container name="Tab 1 page"></app-explore-container>
-  {{ info$ | async | json}}
-  {{ error$ | async | json}}
+  
+  <ng-container *ngIf="info$ | async as info else logout"> 
+    <ion-button (click)="signOut()">Sign out</ion-button>
+    <pre>
+      Info:
+      {{ info | json }}
+    </pre>
+  </ng-container>
+  <ng-template #logout>
+    <ion-button (click)="signIn()">Sign in</ion-button>
+  </ng-template>
+  
+  <pre *ngIf="error$ | async as error">
+    Error:
+    {{ error | json }}
+  </pre>
 </ion-content>
